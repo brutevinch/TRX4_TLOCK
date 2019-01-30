@@ -1,5 +1,5 @@
 # TRX4_TLOCK
-Digispark attiny85 controller for Traxxas T-Lock system.
+Digispark attiny85 controller for Traxxas T-Lock system (platformio project).
 
 Controller is used to read pulse from one channel and control two locking diffs servos.
 
