@@ -1,16 +1,25 @@
+/*
+ * Код стабильно работает на Digispark Attiny85.
+ * Для настройки крайних точек необходимо сервы вывести в нейтральное положение,
+ * затем пружины (серво сейверы) сориентировать перпендикулярно сервам. ----|-- --|---- <- вот так.
+ * После этого необходимо двигать EPA до желаемого результата.
+ * Предположим, что у вас тумблер 1-2-3 положения. Чтобы перейти в режим передней блокировки необходимо, находясь в режиме задней блокировки (положение 2), 
+ * отностительно быстро вернуть переключатель в положение 1 затем снова в 2.
+ */
+
 #include <Arduino.h>
 #include <SimpleServo.h>
 // #include <SoftSerial.h>
 // #include <TinyPinChange.h>
 
-#define RX_PIN 4                    //Канал блокировки дифов
-#define REAR_LOCKING_SERVO_PIN 0    //Серва задней блокировки
-#define FRONT_LOCKING_SERVO_PIN 1   //Серва передней блокировки
+#define RX_PIN 4                    // Пин входящего сигнала (канал блокировок дифов)
+#define REAR_LOCKING_SERVO_PIN 0    // Пин Сервы задней блокировки
+#define FRONT_LOCKING_SERVO_PIN 1   // Пин Сервы передней блокировки
 
-#define REAR_LOCKING_SERVO_EPA_LOCK 135    //Крайняя левая точка задней сервы (Заблокирован)
-#define REAR_LOCKING_SERVO_EPA_UNLOCK 35   //Крайняя правая точка задней сервы (Разблокирован)
-#define FRONT_LOCKING_SERVO_EPA_LOCK 35    //Крайняя левая точка передней сервы (Разблокирован)
-#define FRONT_LOCKING_SERVO_EPA_UNLOCK 125 //Крайняя левая точка передней сервы (Заблокирован)
+#define REAR_LOCKING_SERVO_EPA_LOCK 145    // Крайняя левая точка задней сервы (Заблокирован)
+#define REAR_LOCKING_SERVO_EPA_UNLOCK 40   // Крайняя правая точка задней сервы (Разблокирован)
+#define FRONT_LOCKING_SERVO_EPA_LOCK 30    // Крайняя левая точка передней сервы (Разблокирован)
+#define FRONT_LOCKING_SERVO_EPA_UNLOCK 130 // Крайняя левая точка передней сервы (Заблокирован)
 
 SimpleServo REAR_SERVO;
 SimpleServo FRONT_SERVO;
@@ -33,7 +42,7 @@ unsigned long lastStateChange = 0;
 unsigned long lastDebounceTime = 0;
 
 unsigned long debounceDelay = 50;
-unsigned long advModeDelay = 500;
+unsigned long advModeDelay = 1000; // Чувствительность быстрого переключения 2->1->2 (4ый режим)
 
 void setup() {
   // swSerial.begin(9600);
