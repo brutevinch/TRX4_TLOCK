@@ -45,6 +45,7 @@ unsigned long advModeDelay = 1000; // Чувствительность быст�
 void setup() {
   // swSerial.begin(9600);
   // swSerial.txMode();
+  // swSerial.println("Firmware started");
   REAR_SERVO.attach(REAR_LOCKING_SERVO_PIN);
   FRONT_SERVO.attach(FRONT_LOCKING_SERVO_PIN);
 }
@@ -75,15 +76,15 @@ void sendUpdates() {
 }
 
 void setState() {
-  int RC_RX_DATA = pulseIn(RX_PIN, HIGH, 25000); //Чтение импульса с канала приемника
+  int RC_RX_DATA = pulseIn(RX_PIN, HIGH, 25000); // Чтение импульса с канала приемника
 
   delay(100);
 
   int normalizedDataValue = 0;
 
-  if(RC_RX_DATA >= 1100 && RC_RX_DATA <= 1449) normalizedDataValue = 1;
-  else if(RC_RX_DATA > 1450 && RC_RX_DATA <= 1550) normalizedDataValue = 2;
-  else if(RC_RX_DATA > 1600) normalizedDataValue = 3;
+  if(RC_RX_DATA >= 1200 && RC_RX_DATA < 1500) normalizedDataValue = 1;
+  else if(RC_RX_DATA >= 1500 && RC_RX_DATA < 1750) normalizedDataValue = 2;
+  else if(RC_RX_DATA >= 1750) normalizedDataValue = 3;
 
   if (normalizedDataValue != lastState) {
     // Считанное состояние отличается от предыдущего
@@ -91,6 +92,10 @@ void setState() {
     // в любом случае актуализируем дебаунс таймер
     lastDebounceTime = millis();
   }
+  // swSerial.print("Rx Data: ");
+  // swSerial.print(RC_RX_DATA);
+  // swSerial.print(" ---- Software Mode: ");
+  // swSerial.println(normalizedDataValue);
 
   if ((millis() - lastDebounceTime) > debounceDelay) {
     // Какое-то время не было никаких изменений, считаем что состояние стабильно и мы можем начать обработку
