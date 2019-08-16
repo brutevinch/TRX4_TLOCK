@@ -58,9 +58,9 @@ void sendUpdates() {
       // swSerial.println("Mode 1: Unlock Both Diffs");
       break;
     case 2:
-      REAR_SERVO.write(REAR_LOCKING_SERVO_EPA_LOCK);
-      FRONT_SERVO.write(FRONT_LOCKING_SERVO_EPA_UNLOCK);
-      // swSerial.println("Mode 2: Locking Rear Diff");
+      REAR_SERVO.write(REAR_LOCKING_SERVO_EPA_UNLOCK);
+      FRONT_SERVO.write(FRONT_LOCKING_SERVO_EPA_LOCK);
+      // swSerial.println("Mode 2: Locking Front Diff");
       break;
     case 3:
       REAR_SERVO.write(REAR_LOCKING_SERVO_EPA_LOCK);
@@ -68,9 +68,9 @@ void sendUpdates() {
       // swSerial.println("Mode 3: Locking Both Diffs");
       break;
     case 4:
-      REAR_SERVO.write(REAR_LOCKING_SERVO_EPA_UNLOCK);
-      FRONT_SERVO.write(FRONT_LOCKING_SERVO_EPA_LOCK);
-      // swSerial.println("Mode 4: Locking Front Diff");
+      REAR_SERVO.write(REAR_LOCKING_SERVO_EPA_LOCK);
+      FRONT_SERVO.write(FRONT_LOCKING_SERVO_EPA_UNLOCK);
+      // swSerial.println("Mode 4: Locking Rear Diff");
       break;
   }
 }
